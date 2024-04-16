@@ -3,6 +3,23 @@ import math
 import numpy as np
 
 
+def calculate_QR(A, b):
+    Q, R = rotation_method(A=A)
+    answer = np.dot(np.transpose(Q), b)
+    X = np.zeros(R.shape[0])
+
+    # обратный ход метода Гаусса, R - верхняя треугольная матрица
+    for i in range(R.shape[0] - 1, -1, -1):
+        value = answer[i]
+
+        for j in range(i + 1, R.shape[0]):
+            value -= R[i, j] * X[j]
+
+        X[i] = value / R[i, i]
+
+    return Q, R, X
+
+
 def rotation_method(A):
     n = A.shape[0]
     Q = np.eye(n)
@@ -30,19 +47,3 @@ def rotation_matrix(size, i, j, t, s):
     result_matrix[j, i] = sin
 
     return result_matrix
-
-
-def calculate_QR(A, b):
-    Q, R = rotation_method(A=A)
-    answer = np.dot(np.transpose(Q), b)
-    X = np.zeros(R.shape[0])
-
-    for i in range(R.shape[0] - 1, -1, -1):
-        value = answer[i]
-
-        for j in range(i + 1, R.shape[0]):
-            value -= R[i, j] * X[j]
-
-        X[i] = value / R[i, i]
-
-    return Q, R, X
