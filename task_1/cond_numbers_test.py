@@ -78,14 +78,6 @@ def analyze_book_matrices(degrees):
             [1198.80, -600.40]
         ]),
         np.array([
-            [-401.52, 200.16],
-            [1200.96, -601.68]
-        ]),
-        np.array([
-            [-401.43, 200.19],
-            [1201.14, -601.62]
-        ]),
-        np.array([
             [-401.98, 200.34],
             [1202.04, -602.32]
         ]),
@@ -111,4 +103,6 @@ def analyze_tridiagonal_matrices(degrees):
 
 if __name__ == "__main__":
     degrees = [i for i in range(-2, -10, -1)]
+    analyze_book_matrices(degrees)
+    analyze_hilbert_matrices(degrees)
     analyze_tridiagonal_matrices(degrees)
