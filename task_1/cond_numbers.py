@@ -3,11 +3,7 @@ import math
 
 
 def calculate_cond_s(A):
-    inv_A = np.linalg.inv(A)
-    norm_A = np.linalg.norm(A)
-    norm_inv = np.linalg.norm(inv_A)
-
-    return norm_A * norm_inv
+    return np.linalg.norm(A) * np.linalg.norm(np.linalg.inv(A))
 
 
 def calculate_cond_v(A):
