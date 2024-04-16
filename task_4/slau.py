@@ -34,19 +34,18 @@ def check_diagonal(A):
 
 def simple_iteration_method(A, b, eps):
     n = A.shape[0]
-    is_positive = (np.allclose(A, np.transpose(A)) and min(np.linalg.eig(A)[0]) >= 0)
-    is_diagonal = check_diagonal(A)  # матрица с диагональным преобладанием
 
-    if is_diagonal:
+    if check_diagonal(A):
         B, c = solve_for_diagonal(n, A, b)
-    elif is_positive:
+    elif np.allclose(A, np.transpose(A)) and min(np.linalg.eig(A)[0]) >= 0:
         B, c = solve_for_positive(n, A, b)
     else:
         raise RuntimeError('Matrix is not diagonal or positive')
 
     if max(np.linalg.eig(B)[0]) > np.linalg.norm(B):
-        raise RuntimeError('Matrix B is not convergent')
+        raise RuntimeError('Method is not convergent')
 
+    # привели к форме x = Bx + c
     X, iterations_number = perform_iterations(B, c, eps)
     return X, iterations_number
 
@@ -60,6 +59,7 @@ def seidel_method(A, b, eps):
     B = np.matmul(-inv_D_L, R)
     c = np.matmul(inv_D_L, b)
 
+    # привели к форме x = Bx + c
     return perform_iterations(B, c, eps)
 
 
